@@ -268,7 +268,7 @@ export class QuickOpenTask implements QuickOpenModel, QuickOpenHandler {
 
         const rootUris = (await this.workspaceService.roots).map(rootStat => rootStat.resource.toString());
         for (const rootFolder of rootUris) {
-            const folderName = new URI(rootFolder).displayName;
+            const folderName = this.labelProvider.getName(new URI(rootFolder));
             if (groupedTasks.has(rootFolder)) {
                 const configs = groupedTasks.get(rootFolder.toString())!;
                 this.items.push(
@@ -557,6 +557,7 @@ export class ConfigureBuildOrTestTaskQuickOpenItem extends TaskRunQuickOpenItem 
 function renderScope(scope: TaskConfigurationScope, isMulti: boolean): string {
     if (typeof scope === 'string') {
         if (isMulti) {
+            // eslint-disable-next-line deprecation/deprecation
             return new URI(scope).displayName;
         } else {
             return '';

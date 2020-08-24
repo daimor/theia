@@ -207,7 +207,7 @@ export class FileNavigatorContribution extends AbstractViewContribution<FileNavi
     @postConstruct()
     protected async init(): Promise<void> {
         await this.fileNavigatorPreferences.ready;
-        this.shell.currentChanged.connect(() => this.onCurrentWidgetChangedHandler());
+        this.shell.onDidChangeCurrentWidget(() => this.onCurrentWidgetChangedHandler());
 
         const updateFocusContextKeys = () => {
             const hasFocus = this.shell.activeWidget instanceof FileNavigatorWidget;
@@ -215,7 +215,7 @@ export class FileNavigatorContribution extends AbstractViewContribution<FileNavi
             this.contextKeyService.filesExplorerFocus.set(hasFocus);
         };
         updateFocusContextKeys();
-        this.shell.activeChanged.connect(updateFocusContextKeys);
+        this.shell.onDidChangeActiveWidget(updateFocusContextKeys);
         this.workspaceCommandContribution.onDidCreateNewFile(async event => this.onDidCreateNewResource(event));
         this.workspaceCommandContribution.onDidCreateNewFolder(async event => this.onDidCreateNewResource(event));
     }

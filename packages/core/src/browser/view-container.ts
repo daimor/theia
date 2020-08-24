@@ -289,7 +289,7 @@ export class ViewContainer extends BaseWidget implements StatefulWidget, Applica
                 }
             }),
             this.registerDND(newPart),
-            newPart.onVisibilityChanged(() => {
+            newPart.onDidChangeVisibility(() => {
                 this.updateTitle();
                 this.updateCurrentPart();
             }),

@@ -684,7 +684,7 @@ export class ScmResourceFolderElement extends ScmElement<ScmResourceFolderElemen
     render(): JSX.Element {
         const { hover } = this.state;
         const { groupId, sourceUri, path, labelProvider, commands, menus, contextKeys } = this.props;
-        const sourceFileStat: FileStat = { uri: sourceUri, isDirectory: true, lastModification: 0 };
+        const sourceFileStat: FileStat = { uri: sourceUri, isDirectory: true, lastModification: 0 }; // TODO
         const icon = labelProvider.getIcon(sourceFileStat);
 
         return <div key={sourceUri}

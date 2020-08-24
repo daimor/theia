@@ -16,11 +16,11 @@
 
 import { inject, injectable } from 'inversify';
 import {
-    QuickOpenModel, QuickOpenGroupItem, QuickOpenHandler,
-    QuickOpenOptions, QuickOpenItemOptions, QuickOpenMode,
-    PrefixQuickOpenService,
-    QuickOpenContribution, QuickOpenHandlerRegistry, QuickOpenGroupItemOptions
+    QuickOpenGroupItem, QuickOpenHandler, QuickOpenOptions,
+    QuickOpenMode, PrefixQuickOpenService,
+    QuickOpenContribution, QuickOpenHandlerRegistry
 } from '@theia/core/lib/browser';
+import { QuickOpenModel, QuickOpenItemOptions, QuickOpenGroupItemOptions } from '@theia/core/lib/common/quick-open-model';
 import { CommandContribution, CommandRegistry, CommandService } from '@theia/core/lib/common';
 import { TerminalWidget } from './base/terminal-widget';
 import { TerminalService } from './base/terminal-service';

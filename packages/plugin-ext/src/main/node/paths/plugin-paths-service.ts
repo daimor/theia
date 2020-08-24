@@ -24,9 +24,11 @@ import { ILogger } from '@theia/core';
 import { FileUri } from '@theia/core/lib/node';
 import { PluginPaths } from './const';
 import { PluginPathsService } from '../../common/plugin-paths-protocol';
-import { THEIA_EXT, VSCODE_EXT, getTemporaryWorkspaceFileUri } from '@theia/workspace/lib/common';
+import { THEIA_EXT, VSCODE_EXT } from '@theia/workspace/lib/common';
 import { EnvVariablesServer } from '@theia/core/lib/common/env-variables';
 import { PluginCliContribution } from '../plugin-cli-contribution';
+import { WorkspaceService } from '@theia/workspace/lib/browser';
+import { LabelProvider } from '@theia/core/src/browser';
 
 const SESSION_TIMESTAMP_PATTERN = /^\d{8}T\d{6}$/;
 
@@ -42,6 +44,12 @@ export class PluginPathsServiceImpl implements PluginPathsService {
 
     @inject(PluginCliContribution)
     protected readonly cliContribution: PluginCliContribution;
+
+    @inject(WorkspaceService)
+    protected readonly workspaceService: WorkspaceService;
+
+    @inject(LabelProvider)
+    protected readonly labelProvider: LabelProvider;
 
     async getHostLogPath(): Promise<string> {
         const parentLogsDir = await this.getLogsDirPath();
@@ -78,7 +86,7 @@ export class PluginPathsServiceImpl implements PluginPathsService {
     }
 
     protected async buildWorkspaceId(workspaceUri: string, rootUris: string[]): Promise<string> {
-        const untitledWorkspace = await getTemporaryWorkspaceFileUri(this.envServer);
+        const untitledWorkspace = await this.workspaceService.getUntitledWorkspace();
 
         if (untitledWorkspace.toString() === workspaceUri) {
             // if workspace is temporary
@@ -90,7 +98,7 @@ export class PluginPathsServiceImpl implements PluginPathsService {
             try {
                 stat = await fs.stat(FileUri.fsPath(workspaceUri));
             } catch { /* no-op */ }
-            let displayName = new URI(workspaceUri).displayName;
+            let displayName = this.labelProvider.getName(new URI(workspaceUri));
             if ((!stat || !stat.isDirectory()) && (displayName.endsWith(`.${THEIA_EXT}`) || displayName.endsWith(`.${VSCODE_EXT}`))) {
                 displayName = displayName.slice(0, displayName.lastIndexOf('.'));
             }

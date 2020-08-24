@@ -15,7 +15,8 @@
  ********************************************************************************/
 
 import { injectable, inject, postConstruct } from 'inversify';
-import { QuickOpenItem, QuickOpenMode, QuickOpenGroupItem, QuickOpenItemOptions } from './quick-open-model';
+import { QuickOpenItem, QuickOpenMode, QuickOpenGroupItem } from './quick-open-model';
+import { QuickOpenItemOptions } from '../../common/quick-open-model';
 import { QuickOpenService } from './quick-open-service';
 import { QuickPickService, QuickPickOptions, QuickPickItem, QuickPickSeparator, QuickPickValue } from '../../common/quick-pick-service';
 import { QuickOpenHideReason } from '../../common/quick-open-service';

@@ -22,7 +22,8 @@ import {
     CommandRegistry, isOSX, ActionMenuNode, CompositeMenuNode,
     MAIN_MENU_BAR, MenuModelRegistry, MenuPath
 } from '../../common';
-import { PreferenceService, KeybindingRegistry, Keybinding } from '../../browser';
+import { PreferenceService, KeybindingRegistry } from '../../browser';
+import { Keybinding } from '../../common/keybinding';
 import { ContextKeyService } from '../../browser/context-key-service';
 import debounce = require('lodash.debounce');
 import { ContextMenuContext } from '../../browser/menu/context-menu-context';

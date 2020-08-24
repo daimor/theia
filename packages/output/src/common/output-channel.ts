@@ -20,7 +20,7 @@ import URI from '@theia/core/lib/common/uri';
 import { Deferred } from '@theia/core/lib/common/promise-util';
 import { Resource, ResourceResolver } from '@theia/core/lib/common/resource';
 import { CommandRegistry, CommandContribution } from '@theia/core/lib/common/command';
-import { QuickPickService } from '@theia/core/lib/browser';
+import { QuickPickService } from '@theia/core/lib/common/quick-pick-service';
 import { Emitter, Event, Disposable, DisposableCollection } from '@theia/core';
 import { QuickPickItem } from '@theia/core/lib/common/quick-pick-service';
 import { MonacoEditorModel } from '@theia/monaco/lib/browser/monaco-editor-model';

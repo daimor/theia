@@ -408,6 +408,7 @@ export class WorkspaceService implements FrontendApplicationContribution {
     }
 
     async getUntitledWorkspace(): Promise<URI> {
+        // eslint-disable-next-line deprecation/deprecation
         return getTemporaryWorkspaceFileUri(this.envVariableServer);
     }
 
@@ -485,8 +486,7 @@ export class WorkspaceService implements FrontendApplicationContribution {
         } else {
             this.setURLFragment('');
         }
-
-        window.location.reload(true);
+        window.location.reload();
     }
 
     protected openNewWindow(workspacePath: string): void {

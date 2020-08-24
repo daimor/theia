@@ -157,6 +157,7 @@ export namespace TypeHierarchyTree {
 
         function decorationData(item: TypeHierarchyItem, direction: TypeHierarchyDirection): TreeDecoration.Data {
             const captionSuffixes: TreeDecoration.CaptionAffix[] = [{
+                // eslint-disable-next-line deprecation/deprecation
                 data: new URI(item.uri).displayName,
                 fontData: {
                     color: 'var(--theia-descriptionForeground)',

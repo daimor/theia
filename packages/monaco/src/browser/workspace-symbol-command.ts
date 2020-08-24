@@ -17,10 +17,16 @@
 import { injectable, inject } from 'inversify';
 import { environment } from '@theia/application-package/lib/environment';
 import {
-    PrefixQuickOpenService, QuickOpenModel, QuickOpenItem, OpenerService,
-    QuickOpenMode, KeybindingContribution, KeybindingRegistry, QuickOpenHandler, QuickOpenOptions, QuickOpenContribution, QuickOpenHandlerRegistry
+    PrefixQuickOpenService, QuickOpenItem, OpenerService,
+    QuickOpenMode, KeybindingContribution, KeybindingRegistry,
+    QuickOpenHandler, QuickOpenOptions, QuickOpenContribution,
+    QuickOpenHandlerRegistry, LabelProvider
 } from '@theia/core/lib/browser';
-import { CancellationTokenSource, CommandRegistry, CommandHandler, Command, SelectionService, CancellationToken } from '@theia/core';
+import { QuickOpenModel } from '@theia/core/lib/common/quick-open-model';
+import {
+    CancellationTokenSource, CommandRegistry, CommandHandler,
+    Command, SelectionService, CancellationToken
+} from '@theia/core';
 import URI from '@theia/core/lib/common/uri';
 import { CommandContribution } from '@theia/core/lib/common';
 import { Range, Position, SymbolInformation } from 'vscode-languageserver-types';
@@ -42,6 +48,7 @@ export class WorkspaceSymbolCommand implements QuickOpenModel, CommandContributi
     @inject(OpenerService) protected readonly openerService: OpenerService;
     @inject(PrefixQuickOpenService) protected quickOpenService: PrefixQuickOpenService;
     @inject(SelectionService) protected selectionService: SelectionService;
+    @inject(LabelProvider) protected readonly labelProvider: LabelProvider;
 
     isEnabled(): boolean {
         return this.languages.workspaceSymbolProviders !== undefined;
@@ -131,7 +138,7 @@ export class WorkspaceSymbolCommand implements QuickOpenModel, CommandContributi
         if (parent) {
             parent += ' - ';
         }
-        parent = (parent || '') + uri.displayName;
+        parent = (parent || '') + this.labelProvider.getName(uri);
         return new SimpleOpenItem(sym.name, icon, parent, uri.toString(), () => {
 
             if (provider.resolveWorkspaceSymbol) {

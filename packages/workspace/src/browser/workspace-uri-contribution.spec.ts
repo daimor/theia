@@ -20,10 +20,9 @@ const disableJSDOM = enableJSDOM();
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { Container } from 'inversify';
-import { Signal } from '@phosphor/signaling';
 import { Event } from '@theia/core/lib/common/event';
 import { ApplicationShell, WidgetManager } from '@theia/core/lib/browser';
-import { DefaultUriLabelProviderContribution } from '@theia/core/lib/browser/label-provider';
+import { DefaultUriLabelProviderContribution, LabelProvider, LabelProviderContribution } from '@theia/core/lib/browser/label-provider';
 import { WorkspaceUriLabelProviderContribution } from './workspace-uri-contribution';
 import URI from '@theia/core/lib/common/uri';
 import { WorkspaceVariableContribution } from './workspace-variable-contribution';
@@ -32,6 +31,7 @@ import { FileService } from '@theia/filesystem/lib/browser/file-service';
 import { FileStat } from '@theia/filesystem/lib/common/files';
 import { EnvVariablesServer } from '@theia/core/lib/common/env-variables';
 import { MockEnvVariablesServerImpl } from '@theia/core/lib/browser/test/mock-env-variables-server';
+import { bindContributionProvider } from '@theia/core/lib/common';
 import { FileUri } from '@theia/core/lib/node';
 import * as temp from 'temp';
 
@@ -45,7 +45,7 @@ beforeEach(() => {
 
     container = new Container();
     container.bind(ApplicationShell).toConstantValue({
-        currentChanged: new Signal({}),
+        onDidChangeCurrentWidget: () => undefined,
         widgets: () => []
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any);
@@ -55,9 +55,12 @@ beforeEach(() => {
     } as any);
     const workspaceService = new WorkspaceService();
     workspaceService.tryGetRoots = () => roots;
+    container.bind(LabelProvider).to(LabelProvider).inSingletonScope();
+    bindContributionProvider(container, LabelProviderContribution);
     container.bind(WorkspaceService).toConstantValue(workspaceService);
     container.bind(WorkspaceVariableContribution).toSelf().inSingletonScope();
     container.bind(WorkspaceUriLabelProviderContribution).toSelf().inSingletonScope();
+    container.bind(LabelProviderContribution).toService(WorkspaceUriLabelProviderContribution);
     container.bind(FileService).toConstantValue({} as FileService);
     container.bind(EnvVariablesServer).toConstantValue(new MockEnvVariablesServerImpl(FileUri.create(temp.track().mkdirSync())));
     labelProvider = container.get(WorkspaceUriLabelProviderContribution);

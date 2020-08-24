@@ -276,7 +276,7 @@ export class ApplicationShell extends Widget {
             panelFocus.set(area === 'main');
         };
         updateFocusContextKeys();
-        this.activeChanged.connect(updateFocusContextKeys);
+        this.onDidChangeActiveWidget(updateFocusContextKeys);
     }
 
     protected onBeforeAttach(msg: Message): void {
@@ -866,6 +866,7 @@ export class ApplicationShell extends Widget {
      * Handle a change to the current widget.
      */
     private onCurrentChanged(sender: FocusTracker<Widget>, args: FocusTracker.IChangedArgs<Widget>): void {
+        // eslint-disable-next-line deprecation/deprecation
         this.currentChanged.emit(args);
         this.onDidChangeCurrentWidgetEmitter.fire(args);
     }
@@ -940,6 +941,7 @@ export class ApplicationShell extends Widget {
             };
             this.toDisposeOnActiveChanged.push(Disposable.create(() => newValue['onCloseRequest'] = onCloseRequest));
         }
+        // eslint-disable-next-line deprecation/deprecation
         this.activeChanged.emit(args);
         this.onDidChangeActiveWidgetEmitter.fire(args);
     }

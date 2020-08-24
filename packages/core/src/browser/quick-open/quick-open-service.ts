@@ -15,7 +15,7 @@
  ********************************************************************************/
 
 import { injectable } from 'inversify';
-import { QuickOpenModel } from './quick-open-model';
+import { QuickOpenModel } from '../../common/quick-open-model';
 import { MessageType } from '../../common/message-service-protocol';
 import * as common from '../../common/quick-open-service';
 import { QuickOpenItem } from '../../common/quick-open-model';

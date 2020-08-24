@@ -149,6 +149,7 @@ export class DefaultUriLabelProviderContribution implements LabelProviderContrib
     }
 
     protected getFileIcon(uri: URI): string | undefined {
+        // eslint-disable-next-line deprecation/deprecation
         const fileIcon = fileIcons.getClassWithColor(uri.displayName);
         if (!fileIcon) {
             return undefined;
@@ -158,6 +159,7 @@ export class DefaultUriLabelProviderContribution implements LabelProviderContrib
 
     getName(element: URI | URIIconReference): string | undefined {
         const uri = this.getUri(element);
+        // eslint-disable-next-line deprecation/deprecation
         return uri && uri.displayName;
     }
 

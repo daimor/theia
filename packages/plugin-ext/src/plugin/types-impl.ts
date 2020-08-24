@@ -890,6 +890,7 @@ export class Hover {
             illegalArgument('contents must be defined');
         }
         if (Array.isArray(contents)) {
+            // eslint-disable-next-line deprecation/deprecation
             this.contents = <MarkdownString[] | theia.MarkedString[]>contents;
         } else if (isMarkdownString(contents)) {
             this.contents = [contents];
