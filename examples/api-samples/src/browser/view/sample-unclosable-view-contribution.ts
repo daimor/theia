@@ -29,7 +29,7 @@ export class SampleUnclosableViewContribution extends AbstractViewContribution<S
             widgetName: 'Sample Unclosable View',
             toggleCommandId: SampleUnclosableViewContribution.SAMPLE_UNCLOSABLE_VIEW_TOGGLE_COMMAND_ID,
             defaultWidgetOptions: {
-                area: 'main'
+                area: 'left'
             }
         });
     }

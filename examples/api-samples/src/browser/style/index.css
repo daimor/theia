@@ -1,0 +1,4 @@
+.library-tab-icon {
+    -webkit-mask: url('../icons/library-tab-icon.svg');
+    mask: url('../icons/library-tab-icon.svg');
+}

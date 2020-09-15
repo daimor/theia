@@ -30,7 +30,7 @@ export class SampleViewUnclosableView extends ReactWidget {
     this.id = SampleViewUnclosableView.ID;
     this.title.caption = 'Sample Unclosable View';
     this.title.label = 'Sample Unclosable View';
-    this.title.iconClass = 'fa fa-window-maximize';
+    this.title.iconClass = 'library-tab-icon';
     this.title.closable = false;
     this.update();
   }
